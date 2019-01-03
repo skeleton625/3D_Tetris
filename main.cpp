@@ -6,7 +6,7 @@ glDisplay glDis;
 glTexture glTex;
 
 void norKey_press(unsigned char key, int x, int y) {
-
+	glDis.glDis_norKey_press(key);
 }
 
 void norKey_up(unsigned char key, int x, int y) {
@@ -14,7 +14,7 @@ void norKey_up(unsigned char key, int x, int y) {
 }
 
 void specKey_press(int key, int x, int y) {
-
+	glDis.glDis_specKey_press(key);
 }
 
 void specKey_up(int key, int x, int y) {
@@ -45,13 +45,13 @@ void main(int argc, char **argv) {
 	
 	glTex.glTex_init();
 
-	glDis.glDis_setTexID(glTex.glTex_get_texID());
+	glDis.glDis_init(glTex.glTex_get_texID());
 	glutIdleFunc(Idle);
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	//glutKeyboardFunc(norKey_press);
+	glutKeyboardFunc(norKey_press);
 	//glutKeyboardUpFunc(norKey_up);
-	//glutSpecialFunc(specKey_press);
+	glutSpecialFunc(specKey_press);
 	//glutSpecialUpFunc(specKey_up);
 	glutMainLoop();
 }

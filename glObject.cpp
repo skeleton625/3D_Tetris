@@ -29,7 +29,7 @@ void glObject::glObj_create_plane(float size[3]) {
 	glPopMatrix();
 }
 
-void glObject::glObj_create_cube(float size[3]) {
+void glObject::glObj_create_cube(float size[3], float angle, bool stan[3]) {
 	glPushMatrix(); {
 		glTranslatef(x, y, z);
 		glScalef(size[0], size[1], size[2]);
