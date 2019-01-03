@@ -1,5 +1,5 @@
-#include "glDisplay.h"
 #include "OpenGL.h"
+#include "glDisplay.h"
 
 void glDisplay::glDis_display(){
 	glMatrixMode(GL_MODELVIEW);
@@ -9,6 +9,8 @@ void glDisplay::glDis_display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	light.glLight_init();
 	light.glLight_setSunLight();
+
+	tetris.glTet_create_background();
 
 	glDisable(GL_TEXTURE_GEN_S);
 	glDisable(GL_TEXTURE_GEN_T);

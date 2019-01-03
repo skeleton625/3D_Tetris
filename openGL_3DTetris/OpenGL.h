@@ -1,2 +1,2 @@
-#include "glut.h"
-#include "GL/glu.h"
+#include <glut.h>
+#include <GL/GLU.h>

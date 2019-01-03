@@ -49,9 +49,9 @@ void main(int argc, char **argv) {
 	glutIdleFunc(Idle);
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutKeyboardFunc(norKey_press);
-	glutKeyboardUpFunc(norKey_up);
-	glutSpecialFunc(specKey_press);
-	glutSpecialUpFunc(specKey_up);
+	//glutKeyboardFunc(norKey_press);
+	//glutKeyboardUpFunc(norKey_up);
+	//glutSpecialFunc(specKey_press);
+	//glutSpecialUpFunc(specKey_up);
 	glutMainLoop();
 }

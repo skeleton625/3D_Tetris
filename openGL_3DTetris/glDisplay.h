@@ -1,9 +1,11 @@
 #include "glLight.h"
 #include "glObject.h"
+#include "glTetrisObj.h"
 
 class glDisplay {
 private:
 	glLight light;
+	glTetrisObj tetris;
 	double cam_pos[3] = { 0, 0, 0 };
 public:
 	void glDis_display();
