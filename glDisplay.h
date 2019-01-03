@@ -1,12 +1,15 @@
 #include "glLight.h"
+#include "glInput.h"
 #include "glObject.h"
 #include "glTetrisObj.h"
 
 class glDisplay {
 private:
+	int pre_pos[3];
 	glLight light;
+	glInput keyboard;
 	glTetrisObj tetris;
-	double cam_pos[3] = { 0, 10, -10 };
+	double cam_pos[3] = { -10, 30, -40 };
 public:
 	void glDis_display();
 	void glDis_create_object();

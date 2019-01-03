@@ -17,7 +17,7 @@ void glObject::glObj_create_plane(float size[3]) {
 		glTranslatef(x, y, z);
 		glScalef(size[0], size[1], size[2]);
 		glBindTexture(GL_TEXTURE_2D, id);
-		glBegin(GL_QUADS); {
+		glBegin(GL_LINE_LOOP); {
 			for (int i = 0; i < 4; i++) {
 				glTexCoord2fv(Tex[i]);
 				glNormal3fv(plane[i]);
