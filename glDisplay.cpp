@@ -20,9 +20,7 @@ void glDisplay::glDis_display(){
 }
 
 void glDisplay::glDis_create_object() {
-	for (int i = 0; i < 1; i++) {
-		tetris.glTet_create_block(i, pre_pos);
-	}
+	tetris.glTet_create_block(0);
 }
 
 void glDisplay::glDis_create_background() {
@@ -34,14 +32,14 @@ void glDisplay::glDis_init(unsigned int* tex_id) {
 }
 
 void glDisplay::glDis_norKey_press(unsigned char key) {
-	tetris.glTet_block_trans(key, pre_pos);
+	tetris.glTet_block_trans(key);
 }
 
 void glDisplay::glDis_norKey_up(unsigned char key) {
 }
 
 void glDisplay::glDis_specKey_press(int key) {
-	tetris.glTet_block_trans(key, pre_pos);
+	tetris.glTet_block_trans(key);
 }
 
 void glDisplay::glDIs_specKey_up(int key) {

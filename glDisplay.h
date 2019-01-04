@@ -4,7 +4,6 @@
 
 class glDisplay {
 private:
-	int pre_pos[3] = { -2, 17, 2 };
 	glLight light;
 	glTetrisObj tetris;
 	double cam_pos[3] = { 0, 40, -20 };
