@@ -2,7 +2,7 @@
 
 class glLight {
 private:
-	float light_pos[3] = { 0, 19, 0 };
+	float light_pos[3] = { 10, 25, -10 };
 	float light_ambi[4] = { 0.4, 0.4, 0.4, 1.0 };
 	float light_diff[4] = { 0.2, 0.2, 0.2, 1.0 };
 	float light_spec[4] = { 0.1, 0.1, 0.1 ,1.0 };

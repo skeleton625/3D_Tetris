@@ -51,6 +51,6 @@ void glObject::glObj_setX(float x) { this->x = x; }
 void glObject::glObj_setY(float y) { this->y = y; }
 void glObject::glObj_setZ(float z) { this->z = z; }
 void glObject::glObj_set_texID(unsigned int id) { this->id = id; }
-float glObject::glObj_getX() { return x; }
-float glObject::glObj_getY() { return y; }
-float glObject::glObj_getZ() { return z; }
+int glObject::glObj_getX() { return x; }
+int glObject::glObj_getY() { return y; }
+int glObject::glObj_getZ() { return z; }

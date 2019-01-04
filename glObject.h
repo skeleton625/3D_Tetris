@@ -30,7 +30,7 @@ public:
 	void glObj_setY(float y);
 	void glObj_setZ(float z);
 	void glObj_set_texID(unsigned int id);
-	float glObj_getX();
-	float glObj_getY();
-	float glObj_getZ();
+	int glObj_getX();
+	int glObj_getY();
+	int glObj_getZ();
 };
