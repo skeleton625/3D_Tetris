@@ -1,11 +1,14 @@
 #include "glTetrisObj.h"
 #include "OpenGL.h"
 #include <cmath>
+#include <ctime>
+#include <random>
 #include <iostream>
 using namespace std;
 
 void glTetrisObj::glTetris_init() {
 	collider.glColli_init();
+	queue.queue_init();
 }
 
 void glTetrisObj::glTet_create_background() {
@@ -64,6 +67,10 @@ void glTetrisObj::glTet_create_block(int val) {
 	}
 	glPopMatrix();
 	is_end = false;
+}
+
+void glTetrisObj::glTet_set_random_blocks() {
+
 }
 
 void glTetrisObj::glTet_move_block() {
@@ -168,3 +175,28 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 }
 
 bool glTetrisObj::glTetris_is_end() { return is_end; }
+
+void glTetrisObj::Tetris_queue::queue_init() {
+	srand(time(0));
+	head = new node(rand(), NULL);
+	node *tmp = head;
+	for (int i = 0; i < 4; i++) {
+		tmp->setNext(rand());
+		tmp = tmp->getNext();
+	}
+	tail = tmp;
+}
+
+void glTetrisObj::Tetris_queue::queue_push() {
+	srand(time(0));
+	tail->setNext(rand());
+	tail = tail->getNext();
+}
+
+int glTetrisObj::Tetris_queue::queue_pop() {
+	node *tmp = head->getNext();
+	int re = head->getNum();
+	delete head;
+	head = tmp;
+	return re;
+}
