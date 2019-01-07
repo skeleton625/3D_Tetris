@@ -1,6 +1,8 @@
 #include "OpenGL.h"
 #include "glDisplay.h"
 #include "glTexture.h"
+#include <thread>
+using namespace std;
 
 glDisplay glDis;
 glTexture glTex;
@@ -46,6 +48,7 @@ void main(int argc, char **argv) {
 	glTex.glTex_init();
 
 	glDis.glDis_init(glTex.glTex_get_texID());
+	thread block_down{&glDisplay::glDis_block_down, &glDis};
 	glutIdleFunc(Idle);
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

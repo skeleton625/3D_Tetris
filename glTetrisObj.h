@@ -1,6 +1,7 @@
 #include "glLight.h"
 #include "glCollider.h"
 #include "glObject.h"
+#include "stddef.h"	/* NULL을 식별하기 위해 정의 */
 
 class glTetrisObj {
 private:
@@ -17,7 +18,11 @@ private:
 				this->num = num;
 			}
 
-			~node() { this->prev->next = this->next; }
+			~node() {
+				if (this->prev != NULL) {
+					this->prev->next = this->next;
+				}
+			}
 			node* getPrev() { return this->prev; }
 			node* getNext() { return this->next; }
 			int getNum() { return this->num; }
@@ -45,7 +50,7 @@ private:
 	float plane_diff[4] = { 0.4, 0.4, 0.4, 1.0 };
 	float plane_spec[4] = { 0.2, 0.2, 0.2, 1.0 };
 	/* BLOCK의 현재 위치 */
-	int pre_pos[3] = { -2, 17, 2 }, block_val;
+	int pre_pos[3] = { -2, 23, 2 }, block_val;
 	/* 각 BLOCK들의 현재 위치 */
 	int tetris_block[7][4][2] = {
 		{{0,-1},{0,1},{1,-1},{0,0}},
@@ -62,8 +67,8 @@ public:
 	bool glTetris_is_end();
 	void glTet_create_background();
 	void glTet_create_block(int val);
-	void glTet_set_random_blocks();
 	void glTet_move_block();
+	void glTet_block_down();
 	bool glTet_block_trans(int x, int y, int z);
 	void glTet_block_specKey(int key);
 	void glTet_block_norKey(unsigned char key);

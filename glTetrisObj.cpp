@@ -1,6 +1,5 @@
 #include "glTetrisObj.h"
 #include "OpenGL.h"
-#include <cmath>
 #include <ctime>
 #include <random>
 #include <iostream>
@@ -69,10 +68,6 @@ void glTetrisObj::glTet_create_block(int val) {
 	is_end = false;
 }
 
-void glTetrisObj::glTet_set_random_blocks() {
-
-}
-
 void glTetrisObj::glTet_move_block() {
 	glPushMatrix(); {
 		// BLOCK 하나에 대한 이동과 회전
@@ -83,6 +78,17 @@ void glTetrisObj::glTet_move_block() {
 		}
 	}
 	glPopMatrix();
+}
+
+void glTetrisObj::glTet_block_down() {
+	int count = 0;
+	while (1) {
+		/* BLOCK이 바닥에 닿았을 경우 -> glCollider로 다음 이벤트를 정의해야 함 */
+		if (!glTet_block_trans(pre_pos[0], pre_pos[1] - 2, pre_pos[2])) {
+			pre_pos[1] -= 2;
+		}
+		_sleep(1500);
+	}
 }
 
 bool glTetrisObj::glTet_block_trans(int x, int y, int z) {
@@ -171,6 +177,10 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				block[i].glObj_setY(x);
 			}
 			break;
+		case 'v':
+			glTet_create_block(queue.queue_pop());
+			queue.queue_push();
+			break;
 	}
 }
 
@@ -178,10 +188,10 @@ bool glTetrisObj::glTetris_is_end() { return is_end; }
 
 void glTetrisObj::Tetris_queue::queue_init() {
 	srand(time(0));
-	head = new node(rand(), NULL);
+	head = new node(rand()%7, NULL);
 	node *tmp = head;
 	for (int i = 0; i < 4; i++) {
-		tmp->setNext(rand());
+		tmp->setNext(rand()%7);
 		tmp = tmp->getNext();
 	}
 	tail = tmp;
@@ -189,7 +199,8 @@ void glTetrisObj::Tetris_queue::queue_init() {
 
 void glTetrisObj::Tetris_queue::queue_push() {
 	srand(time(0));
-	tail->setNext(rand());
+	int num = rand() % 7;
+	tail->setNext(num);
 	tail = tail->getNext();
 }
 

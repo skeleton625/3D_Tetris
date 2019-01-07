@@ -19,6 +19,10 @@ void glDisplay::glDis_display(){
 	glFlush();
 }
 
+void glDisplay::glDis_block_down() {
+	tetris.glTet_block_down();
+}
+
 void glDisplay::glDis_create_object() {
 	if(tetris.glTetris_is_end()) tetris.glTet_create_block(0);
 	else tetris.glTet_move_block();

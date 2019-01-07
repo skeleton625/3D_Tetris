@@ -9,6 +9,7 @@ private:
 	double cam_pos[3] = { -30, 40, -30 };
 public:
 	void glDis_display();
+	void glDis_block_down();
 	void glDis_create_object();
 	void glDis_create_background();
 	void glDis_init(unsigned int* tex_id);

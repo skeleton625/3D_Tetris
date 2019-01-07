@@ -1,7 +1,5 @@
 #include "glCollider.h"
 #include "OpenGL.h"
-#include <iostream>
-using namespace std;
 
 void glCollider::glColli_init() {
 	for (int i = 1; i < 12; i++) {
@@ -19,6 +17,5 @@ void glCollider::glColli_init() {
 }
 
 bool glCollider::glColli_is_block_pos(int x, int y, int z) {
-	cout << (x + 6) / 2 << ' ' << (y + 2) / 2 << ' ' << (z + 6) / 2 << '\n';
 	return tetris_matrix[(x+6)/2][(y+2) / 2][(z+6) / 2];
 }
