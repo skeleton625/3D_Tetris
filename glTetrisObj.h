@@ -43,7 +43,7 @@ private:
 	float plane_diff[4] = { 0.4, 0.4, 0.4, 1.0 };
 	float plane_spec[4] = { 0.2, 0.2, 0.2, 1.0 };
 	/* BLOCK의 현재 위치 */
-	int pre_pos[3] = { -2, 23, 2 }, block_val;
+	int pre_pos[3] = { 0, 1, 0 }, block_val;
 	/* 각 BLOCK들의 현재 위치 */
 	int tetris_block[7][4][2] = {
 		{{0,-1},{0,1},{1,-1},{0,0}},
@@ -54,14 +54,14 @@ private:
 		{{0,-1},{0,1},{0,2},{0,0}},
 		{{0,0},{0,-1},{1,0},{1,-1}}
 	};
-	int angle[3];	/* 회전 각도 */
 public:
 	void glTetris_init();
 	bool glTetris_is_end();
 	void glTet_create_background();
 	void glTet_create_block(int val);
-	void glTet_move_block();
+
 	void glTet_block_down();
+	void glTet_move_block();
 	bool glTet_block_trans(int x, int y, int z);
 	void glTet_block_specKey(int key);
 	void glTet_block_norKey(unsigned char key);

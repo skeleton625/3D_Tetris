@@ -16,6 +16,14 @@ void glCollider::glColli_init() {
 	}
 }
 
+bool glCollider::glColli_is_block_pos(int x, int y, int z) {
+	return tetris_matrix[(y + 2) / 2][(x + 6) / 2][(z + 6) / 2];
+}
+
+void glCollider::glColli_set_block_pos(int x, int y, int z) {
+	tetris_matrix[(y + 2) / 2][(x + 6) / 2][(z + 6) / 2] = true;
+}
+
 int glCollider::glColli_is_floor_full(int floor) {
 	int count = 0;
 	for (int i = 1; i < 6; i++) {
@@ -27,10 +35,43 @@ int glCollider::glColli_is_floor_full(int floor) {
 	return count;
 }
 
-bool glCollider::glColli_is_block_pos(int x, int y, int z) {
-	return tetris_matrix[(y + 2) / 2][(x + 6) / 2][(z+6) / 2];
+void glCollider::glColli_crash_block() {
+	int count = 0;
+	for (int i = 1; i < 12; i++) {
+		count = glColli_is_floor_full(i);
+		if (count == 0) {
+			glColli_set_blocks_down(count, i);
+			return;
+		} else if (count == 25) {
+			count++;
+		}
+	}
 }
 
-void glCollider::glColli_set_block_pos(int x, int y, int z) {
-	tetris_matrix[(y + 2) / 2][(x + 6) / 2][(z + 6) / 2] = true;
+void glCollider::glColli_set_blocks_down(int floor, int end) {
+	for (int i = 1; i < floor; i++) {
+		for (int j = 1; j < 6; j++) {
+			for (int k = 1; k < 6; k++)
+				tetris_matrix[0][j][k] = false;
+		}
+	}
+	for (int i = floor; i < floor+end; i++) {
+		for (int j = 1; j < 6; j++) {
+			for (int k = 1; k < 6; k++) {
+				tetris_matrix[i - floor][j][k] = tetris_matrix[i][j][k];
+			}
+		}
+	}
+}
+
+void glCollider::glColli_set_pre_blocks() {
+	for (int i = 0; i < 12; i++) {
+		for (int j = 1; j < 6; j++) {
+			for (int k = 1; k < 6; k++) {
+				if (tetris_matrix[i][j][k]) {
+
+				}
+			}
+		}
+	}
 }
