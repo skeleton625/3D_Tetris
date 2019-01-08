@@ -190,7 +190,7 @@ void glTetrisObj::Tetris_queue::queue_init() {
 	srand(time(0));
 	head = new node(rand()%7, NULL);
 	node *tmp = head;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		tmp->setNext(rand()%7);
 		tmp = tmp->getNext();
 	}

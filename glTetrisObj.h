@@ -17,16 +17,9 @@ private:
 				this->prev = prev;
 				this->num = num;
 			}
-
-			~node() {
-				if (this->prev != NULL) {
-					this->prev->next = this->next;
-				}
-			}
 			node* getPrev() { return this->prev; }
 			node* getNext() { return this->next; }
 			int getNum() { return this->num; }
-
 			void setNext(int num) {
 				node *n_node = new node(num, this);
 				this->next = n_node;
