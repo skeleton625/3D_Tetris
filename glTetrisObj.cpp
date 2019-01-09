@@ -48,6 +48,7 @@ void glTetrisObj::glTet_create_background() {
 			glRotatef(-90, 0, 1, 0);
 		}
 	}
+	collider.glColli_set_pre_blocks();
 	glPopMatrix();
 }
 
@@ -92,6 +93,8 @@ void glTetrisObj::glTet_block_down() {
 					block[i].glObj_getZ()+pre_pos[2]
 					);
 			}
+			/* BLOCK으로 꽉 찬 층을 삭제하고 위의 BLOCK들을 아래로 내림 */
+			collider.glColli_crash_block();
 			/* BLOCK을 초기 위치로 이동시킴 */
 			pre_pos[0] = 0;
 			pre_pos[1] = 19;
@@ -99,7 +102,6 @@ void glTetrisObj::glTet_block_down() {
 			/* 무작위 BLOCK 생성 */
 			glTet_create_block(queue.queue_pop());
 			queue.queue_push();
-			collider.glColli_set_pre_blocks();
 		}
 		/* 1.5초에 한 번씩 아래로 이동 */
 		pre_pos[1] -= 2; /* 시간이 지남에 따라 BLOCK을 아래로 이동시킴 */
@@ -159,14 +161,14 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				x = x*cos(t) + z*sin(t)
 				z = z*cos(t) - x*sin(t)
 			*/
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				x = block[i].glObj_getX();
 				y = block[i].glObj_getY();
 				z = block[i].glObj_getZ();
 				if (collider.glColli_is_block_pos(-z + pre_pos[0], y + pre_pos[1], x + pre_pos[2]))
 					return;
 			}
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				x = block[i].glObj_getX();
 				z = block[i].glObj_getZ();
 				block[i].glObj_setX(-z);
@@ -180,14 +182,14 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				x = x*cos(t) - y*sin(t)
 				z = y*cos(t) + x*sin(t)
 			*/
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				x = block[i].glObj_getX();
 				y = block[i].glObj_getY();
 				z = block[i].glObj_getZ();
 				if (collider.glColli_is_block_pos(-y + pre_pos[0], x + pre_pos[1], z + pre_pos[2]))
 					return;
 			}
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				x = block[i].glObj_getX();
 				y = block[i].glObj_getY();
 				block[i].glObj_setX(-y);
