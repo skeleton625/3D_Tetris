@@ -43,7 +43,7 @@ private:
 	float plane_diff[4] = { 0.4, 0.4, 0.4, 1.0 };
 	float plane_spec[4] = { 0.2, 0.2, 0.2, 1.0 };
 	/* BLOCK의 현재 위치 */
-	int pre_pos[3] = { 0, 1, 0 }, block_val;
+	int pre_pos[3] = { 0, 19, 0 }, block_val;
 	/* 각 BLOCK들의 현재 위치 */
 	int tetris_block[7][4][2] = {
 		{{0,-1},{0,1},{1,-1},{0,0}},

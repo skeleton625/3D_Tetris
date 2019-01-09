@@ -83,14 +83,31 @@ void glTetrisObj::glTet_move_block() {
 void glTetrisObj::glTet_block_down() {
 	int count = 0;
 	while (1) {
-		/* BLOCK이 바닥에 닿았을 경우 -> glCollider로 다음 이벤트를 정의해야 함 */
-		if (!glTet_block_trans(pre_pos[0], pre_pos[1] - 2, pre_pos[2])) {
-			pre_pos[1] -= 2;
+		if (glTet_block_trans(pre_pos[0], pre_pos[1] - 2, pre_pos[2])) {
+			/* 현재 BLOCK이 있는 위치에 BLOCK이 있다는 것을 표시 */
+			for (int i = 0; i < 4; i++) {
+				collider.glColli_set_block_pos(
+					block[i].glObj_getX()+pre_pos[0],
+					block[i].glObj_getY()+pre_pos[1],
+					block[i].glObj_getZ()+pre_pos[2]
+					);
+			}
+			/* BLOCK을 초기 위치로 이동시킴 */
+			pre_pos[0] = 0;
+			pre_pos[1] = 19;
+			pre_pos[2] = 0;
+			/* 무작위 BLOCK 생성 */
+			glTet_create_block(queue.queue_pop());
+			queue.queue_push();
+			collider.glColli_set_pre_blocks();
 		}
+		/* 1.5초에 한 번씩 아래로 이동 */
+		pre_pos[1] -= 2; /* 시간이 지남에 따라 BLOCK을 아래로 이동시킴 */
 		_sleep(1500);
 	}
 }
 
+/* BLOCK이 이동하려는 위치에 다른 BLOCK이 있는지 확인하는 함수 */
 bool glTetrisObj::glTet_block_trans(int x, int y, int z) {
 	int obj_x, obj_y, obj_z;
 	for (int i = 0; i < 4; i++) {
@@ -176,10 +193,6 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				block[i].glObj_setX(-y);
 				block[i].glObj_setY(x);
 			}
-			break;
-		case 'v':
-			glTet_create_block(queue.queue_pop());
-			queue.queue_push();
 			break;
 	}
 }

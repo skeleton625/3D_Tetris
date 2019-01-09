@@ -6,7 +6,7 @@ class glDisplay {
 private:
 	glLight light;
 	glTetrisObj tetris;
-	double cam_pos[3] = { -30, 40, -30 };
+	double cam_pos[3] = { -30, 100, -100 };
 public:
 	void glDis_display();
 	void glDis_block_down();

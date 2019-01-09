@@ -1,5 +1,8 @@
 #include "OpenGL.h"
 #include "glDisplay.h"
+#include "glCollider.h"
+
+glCollider colli;
 
 void glDisplay::glDis_display(){
 	glMatrixMode(GL_MODELVIEW);

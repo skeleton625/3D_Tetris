@@ -65,13 +65,28 @@ void glCollider::glColli_set_blocks_down(int floor, int end) {
 }
 
 void glCollider::glColli_set_pre_blocks() {
-	for (int i = 0; i < 12; i++) {
-		for (int j = 1; j < 6; j++) {
-			for (int k = 1; k < 6; k++) {
-				if (tetris_matrix[i][j][k]) {
+	glPushMatrix(); {
+		glTranslatef(2, 17, -2);
+		for (int i = 1; i < 12; i++) {
+			for (int j = 1; j < 6; j++) {
+				for (int k = 1; k < 6; k++) {
+					glObject cube;
+					cube.glObj_setX(i);
+					cube.glObj_setY(j);
+					cube.glObj_setZ(k);
+					cube.glObj_create_cube(block_size);
+					/*
+					if (tetris_matrix[i][j][k]) {
+						cube.glObj_setX(i);
+						cube.glObj_setY(j);
+						cube.glObj_setZ(k);
+						cube.glObj_create_cube(block_size);
+					}
+					*/
 
 				}
 			}
 		}
 	}
+	glPopMatrix();
 }
