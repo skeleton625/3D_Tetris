@@ -15,7 +15,7 @@ public:
 	void glColli_init();
 	int glColli_is_floor_full(int floor);
 	void glColli_set_blocks_down(int floor);
-	void glColli_crash_block();
+	int glColli_crash_block();
 	bool glColli_is_block_pos(int x, int y, int z);
 	void glColli_set_block_pos(int x, int y, int z);
 	void glColli_set_pre_blocks();

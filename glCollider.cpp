@@ -38,17 +38,20 @@ int glCollider::glColli_is_floor_full(int floor) {
 	return count;
 }
 
-void glCollider::glColli_crash_block() {
-	int blocks = 0;
+
+int glCollider::glColli_crash_block() {
+	int blocks = 0, crash_count = 0;
 	for (int i = 1; i < 12; i++) {
 		blocks = glColli_is_floor_full(i);
 		cout << blocks << '\n';
 		if (blocks == 25) {
 			glColli_set_blocks_down(i);
+			crash_count++;
 		} else if(blocks == 0){
 			break;
 		}
 	}
+	return crash_count;
 }
 
 void glCollider::glColli_set_blocks_down(int floor) {

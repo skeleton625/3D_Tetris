@@ -5,9 +5,11 @@
 #include <iostream>
 using namespace std;
 
-void glTetrisObj::glTetris_init() {
+void glTetrisObj::glTetris_init(unsigned int* tex_id) {
 	collider.glColli_init();
 	queue.queue_init();
+	for(int i = 0; i < 7; i++)
+		this->tex_id[i] = tex_id[i];
 }
 
 void glTetrisObj::glTet_create_background() {
@@ -62,12 +64,15 @@ void glTetrisObj::glTet_create_block(int val) {
 			block[i].glObj_setX(tetris_block[val][i][0] * 2);
 			block[i].glObj_setY(0);
 			block[i].glObj_setZ(tetris_block[val][i][1] * 2);
+			block[i].glObj_set_texID(tex_id[val]);
 			block[i].glObj_create_cube(block_size);
 		}
 	}
 	glPopMatrix();
 	is_end = false;
 }
+
+int glTetrisObj::glTet_getScore() { return tetris_score; }
 
 void glTetrisObj::glTet_move_block() {
 	glPushMatrix(); {
@@ -94,10 +99,10 @@ void glTetrisObj::glTet_block_down() {
 					);
 			}
 			/* BLOCK으로 꽉 찬 층을 삭제하고 위의 BLOCK들을 아래로 내림 */
-			collider.glColli_crash_block();
+			tetris_score += collider.glColli_crash_block()*100;
 			/* BLOCK을 초기 위치로 이동시킴 */
 			pre_pos[0] = 0;
-			pre_pos[1] = 19;
+			pre_pos[1] = 23;
 			pre_pos[2] = 0;
 			/* 무작위 BLOCK 생성 */
 			glTet_create_block(queue.queue_pop());
@@ -105,7 +110,7 @@ void glTetrisObj::glTet_block_down() {
 		}
 		/* 1.5초에 한 번씩 아래로 이동 */
 		pre_pos[1] -= 2; /* 시간이 지남에 따라 BLOCK을 아래로 이동시킴 */
-		_sleep(1500);
+		_sleep(2000);
 	}
 }
 
@@ -149,12 +154,16 @@ void glTetrisObj::glTet_block_specKey(int key) {
 void glTetrisObj::glTet_block_norKey(unsigned char key) {
 	int x, y, z;
 	switch (key) {
-		case 'z':
+		case 'a':
 			if(glTet_block_trans(pre_pos[0], pre_pos[1]-2, pre_pos[2])) 
 				return;
 			pre_pos[1] -= 2;
 			break;
-		case 'x': /* Y 축 기준 회전 */
+		case 's':
+			if (rot_count < 3) rot_count++;
+			else rot_count = 1;
+			break;
+		case 'z': /* Y 축 기준 회전 */
 			/* 
 				한 번에 90도 씩 돌아가기 때문에 불필요한 계산식 제거
 				(y축 기준)
@@ -175,7 +184,7 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				block[i].glObj_setZ(x);
 			}
 			break;
-		case 'c': /* z 축 기준 회전 */
+		case 'x': /* z 축 기준 회전 */
 			/*
 				한 번에 90도 씩 돌아가기 때문에 불필요한 계산식 제거
 				(y축 기준)
@@ -194,6 +203,27 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				y = block[i].glObj_getY();
 				block[i].glObj_setX(-y);
 				block[i].glObj_setY(x);
+			}
+			break;
+		case 'c':
+			/*
+				한 번에 90도 씩 돌아가기 때문에 불필요한 계산식 제거
+				(y축 기준)
+				y = y*cos(t) - z*sin(t)
+				z = z*cos(t) + y*sin(t)
+			*/
+			for (int i = 0; i < 4; i++) {
+				x = block[i].glObj_getX();
+				y = block[i].glObj_getY();
+				z = block[i].glObj_getZ();
+				if (collider.glColli_is_block_pos(x + pre_pos[0], -z + pre_pos[1], y + pre_pos[2]))
+					return;
+			}
+			for (int i = 0; i < 4; i++) {
+				y = block[i].glObj_getY();
+				z = block[i].glObj_getZ();
+				block[i].glObj_setY(-z);
+				block[i].glObj_setZ(y);
 			}
 			break;
 	}

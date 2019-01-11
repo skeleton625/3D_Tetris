@@ -4,9 +4,11 @@
 
 class glDisplay {
 private:
+	int rot_count;
 	glLight light;
 	glTetrisObj tetris;
-	double cam_pos[3] = { -30, 40, -40 };
+	double cam_pos[3] = { -30, 35, -35 };
+	double font_color[3] = { 1,1,1 };
 public:
 	void glDis_display();
 	void glDis_block_down();
@@ -17,4 +19,5 @@ public:
 	void glDis_norKey_up(unsigned char key);
 	void glDis_specKey_press(int key);
 	void glDIs_specKey_up(int key);
+	void Display_draw_text(int WinPosX, int WinPosY, const char* strMsg, void* font, double font_color[3]);
 };

@@ -39,6 +39,7 @@ void reshape(int w, int h) {
 	gluPerspective(45, ratio, 1, 2000);
 }
 
+/**/
 void main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
@@ -46,6 +47,13 @@ void main(int argc, char **argv) {
 	glutCreateWindow("3D Tetris");
 	
 	glTex.glTex_init();
+	glTex.glTex_create_texture("red.bmp",0);
+	glTex.glTex_create_texture("blue.bmp", 1);
+	glTex.glTex_create_texture("green.bmp", 2);
+	glTex.glTex_create_texture("pink.bmp", 3);
+	glTex.glTex_create_texture("brown.bmp", 4);
+	glTex.glTex_create_texture("orange.bmp", 5);
+	glTex.glTex_create_texture("gray.bmp", 6);
 
 	glDis.glDis_init(glTex.glTex_get_texID());
 	thread block_down{&glDisplay::glDis_block_down, &glDis};

@@ -33,17 +33,15 @@ private:
 		int queue_pop();
 	};
 	bool is_end = true;
-	glLight obj_light; /* Tetris 기본 Object들의 빛 처리 객체 */
-	glCollider collider; /* BLOCK 충돌 처리 객체 */
-	glObject block[4];	/* BLOCK을 이루는 육면체 4개 */
-	Tetris_queue queue;
 	float block_size[3] = { 1, 1, 1 }; /* Object 크기 */
-	/* 평면 빛 세기 */
-	float plane_ambi[4] = { 0.8, 0.8, 0.8, 1.0 };
-	float plane_diff[4] = { 0.4, 0.4, 0.4, 1.0 };
-	float plane_spec[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float plane_ambi[4] = { 1.0, 1.0, 1.0, 1.0 }; /* 물체 주변광 */
+	float plane_diff[4] = { 0.9, 0.9, 0.9, 1.0 }; /* 물체 깊이광 */
+	float plane_spec[4] = { 0.7, 0.7, 0.7, 1.0 }; /* 물체 반사광 */
+	unsigned int tex_id[10];
+	int tetris_score;
+	int field_rotate, rot_count; /* 필드 전체를 회전시키는 변수 */
 	/* BLOCK의 현재 위치 */
-	int pre_pos[3] = { 0, 19, 0 }, block_val;
+	int pre_pos[3] = { 0, 23, 0 }, block_val;
 	/* 각 BLOCK들의 현재 위치 */
 	int tetris_block[7][4][2] = {
 		{{0,-1},{0,1},{1,-1},{0,0}},
@@ -54,12 +52,16 @@ private:
 		{{0,-1},{0,1},{0,2},{0,0}},
 		{{0,0},{0,-1},{1,0},{1,-1}}
 	};
+	glLight obj_light; /* Tetris 기본 Object들의 빛 처리 객체 */
+	glCollider collider; /* BLOCK 충돌 처리 객체 */
+	glObject block[4];	/* BLOCK을 이루는 육면체 4개 */
+	Tetris_queue queue;
 public:
-	void glTetris_init();
+	void glTetris_init(unsigned int* tex_id);
 	bool glTetris_is_end();
 	void glTet_create_background();
 	void glTet_create_block(int val);
-
+	int glTet_getScore();
 	void glTet_block_down();
 	void glTet_move_block();
 	bool glTet_block_trans(int x, int y, int z);
