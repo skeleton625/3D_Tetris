@@ -30,16 +30,21 @@ void glDisplay::glDis_display(){
 	gluLookAt(cam_pos[0], cam_pos[1], cam_pos[2], 0, 0, 0, 0, 1, 0);
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	light.glLight_init();
 	glEnable(GL_TEXTURE_2D);
-	light.glLight_setSunLight();
-	Display_draw_text(-15, 20,
-		to_string(tetris.glTet_getScore()).c_str(),
-		GLUT_BITMAP_TIMES_ROMAN_24, font_color);
-	glPushMatrix(); {
-		glRotatef(90 * rot_count, 0, 1, 0);
-		glDis_create_background();
-		glDis_create_object();
+	light.glLight_init();
+	if (!tetris.glTet_is_end()) {
+		light.glLight_setSunLight();
+		Display_draw_text(-15, 20,
+			to_string(tetris.glTet_getScore()).c_str(),
+			GLUT_BITMAP_TIMES_ROMAN_24, font_color);
+		glPushMatrix(); {
+			glDis_create_background();
+			glDis_create_object();
+		}
+	} else {
+		Display_draw_text(25, -5,
+			"If you want to restart the game, Press 'ESC'!",
+			GLUT_BITMAP_TIMES_ROMAN_24, font_color);
 	}
 	glPopMatrix();
 	glDisable(GL_TEXTURE_GEN_S);
@@ -48,12 +53,15 @@ void glDisplay::glDis_display(){
 	glFlush();
 }
 
-void glDisplay::glDis_block_down() {
-	tetris.glTet_block_down();
+void glDisplay::glDis_block_cycle() {
+	tetris.glTet_block_cycle();
 }
 
 void glDisplay::glDis_create_object() {
-	if(tetris.glTetris_is_end()) tetris.glTet_create_block(0);
+	if (game_start) {
+		tetris.glTet_create_block();
+		game_start = false;
+	}
 	else tetris.glTet_move_block();
 }
 
@@ -67,13 +75,14 @@ void glDisplay::glDis_init(unsigned int* tex_id) {
 
 void glDisplay::glDis_norKey_press(unsigned char key) {
 	switch (key) {
-		case 's':
-				if (rot_count < 4) rot_count++;
-				else rot_count = 0;
-			break;
-		default:
-			tetris.glTet_block_norKey(key);
-			break;
+	case 27:
+		if (tetris.glTet_is_end()) {
+			tetris.glTetris_init();
+			game_start = true;
+		}
+		break;
+	default:
+		tetris.glTet_block_norKey(key);
 	}
 }
 

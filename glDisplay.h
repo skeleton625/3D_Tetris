@@ -4,14 +4,15 @@
 
 class glDisplay {
 private:
+	bool game_start = true;
 	int rot_count;
 	glLight light;
 	glTetrisObj tetris;
-	double cam_pos[3] = { -30, 35, -35 };
+	double cam_pos[3] = { -30, 60, -30 };
 	double font_color[3] = { 1,1,1 };
 public:
 	void glDis_display();
-	void glDis_block_down();
+	void glDis_block_cycle();
 	void glDis_create_object();
 	void glDis_create_background();
 	void glDis_init(unsigned int* tex_id);

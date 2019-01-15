@@ -32,7 +32,7 @@ private:
 		void queue_push();
 		int queue_pop();
 	};
-	bool is_end = true;
+	bool is_end = false;
 	float block_size[3] = { 1, 1, 1 }; /* Object 크기 */
 	float plane_ambi[4] = { 1.0, 1.0, 1.0, 1.0 }; /* 물체 주변광 */
 	float plane_diff[4] = { 0.9, 0.9, 0.9, 1.0 }; /* 물체 깊이광 */
@@ -41,7 +41,7 @@ private:
 	int tetris_score;
 	int field_rotate, rot_count; /* 필드 전체를 회전시키는 변수 */
 	/* BLOCK의 현재 위치 */
-	int pre_pos[3] = { 0, 23, 0 }, block_val;
+	int pre_pos[3] = { 0, 21, 0 }, block_val;
 	/* 각 BLOCK들의 현재 위치 */
 	int tetris_block[7][4][2] = {
 		{{0,-1},{0,1},{1,-1},{0,0}},
@@ -58,11 +58,13 @@ private:
 	Tetris_queue queue;
 public:
 	void glTetris_init(unsigned int* tex_id);
-	bool glTetris_is_end();
+	void glTetris_init();
+	bool glTet_is_end();
 	void glTet_create_background();
-	void glTet_create_block(int val);
+	void glTet_create_block();
 	int glTet_getScore();
 	void glTet_block_down();
+	void glTet_block_cycle();
 	void glTet_move_block();
 	bool glTet_block_trans(int x, int y, int z);
 	void glTet_block_specKey(int key);

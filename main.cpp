@@ -56,7 +56,7 @@ void main(int argc, char **argv) {
 	glTex.glTex_create_texture("gray.bmp", 6);
 
 	glDis.glDis_init(glTex.glTex_get_texID());
-	thread block_down{&glDisplay::glDis_block_down, &glDis};
+	thread block_down{&glDisplay::glDis_block_cycle, &glDis};
 	glutIdleFunc(Idle);
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
