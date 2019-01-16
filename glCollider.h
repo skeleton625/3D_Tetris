@@ -18,6 +18,7 @@ public:
 	int glColli_crash_block();
 	void glColli_rot_block_pos();
 	bool glColli_is_block_pos(int x, int y, int z);
+	int glColli_mark_block_floor(int x, int z);
 	void glColli_set_block_pos(int x, int y, int z);
 	void glColli_set_pre_blocks();
 };

@@ -12,12 +12,13 @@ void glObject::glObj_create_sphere(float size[3]) {
 	}
 	glPopMatrix();
 }
-void glObject::glObj_create_plane(float size[3]) {
+
+void glObject::glObj_create_plane(float size[3], int clip) {
 	glPushMatrix(); {
 		glTranslatef(x, y, z);
 		glScalef(size[0], size[1], size[2]);
 		glBindTexture(GL_TEXTURE_2D, id);
-		glBegin(GL_LINE_LOOP); {
+		glBegin(clip); {
 			for (int i = 0; i < 4; i++) {
 				glTexCoord2fv(Tex[i]);
 				glNormal3fv(plane[i]);

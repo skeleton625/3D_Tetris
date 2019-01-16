@@ -74,9 +74,10 @@ int glCollider::glColli_crash_block() {
 		blocks = glColli_is_floor_full(i);
 		if (blocks == 25) {
 			glColli_set_blocks_down(i);
+			i--;
 			crash_count++;
 		} else if(blocks == 0){
-			if (i == 11) { return -1; }
+			if (i > 11) { return -1; }
 			break;
 		}
 	}
@@ -105,6 +106,13 @@ void glCollider::glColli_set_blocks_down(int floor) {
 	}
 }
 
+int glCollider::glColli_mark_block_floor(int x, int z) {
+	for (int i = 1; i < 12; i++) {
+		if (!tetris_matrix[i][(x + 6) / 2][(z + 6) / 2])
+			return i;
+	}
+}
+
 void glCollider::glColli_set_pre_blocks() {
 	glPushMatrix(); {
 		glObject cube;
@@ -124,3 +132,4 @@ void glCollider::glColli_set_pre_blocks() {
 	}
 	glPopMatrix();
 }
+

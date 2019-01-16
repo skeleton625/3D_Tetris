@@ -8,7 +8,7 @@ using namespace std;
 void glTetrisObj::glTetris_init(unsigned int* tex_id) {
 	collider.glColli_init();
 	queue.queue_init();
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < 10; i++)
 		this->tex_id[i] = tex_id[i];
 }
 
@@ -36,7 +36,7 @@ void glTetrisObj::glTet_create_background() {
 				floor_pla.glObj_setX(-j*2);
 				floor_pla.glObj_setY(0);
 				floor_pla.glObj_setZ(-i*2);
-				floor_pla.glObj_create_plane(floor_size);
+				floor_pla.glObj_create_plane(floor_size, GL_LINE_LOOP);
 			}
 		}
 	}
@@ -53,7 +53,7 @@ void glTetrisObj::glTet_create_background() {
 						floor_pla.glObj_setX(-k * 2);
 						floor_pla.glObj_setY(0);
 						floor_pla.glObj_setZ(-j * 2);
-						floor_pla.glObj_create_plane(floor_size);
+						floor_pla.glObj_create_plane(floor_size, GL_LINE_LOOP);
 
 					}
 				}
@@ -69,6 +69,14 @@ void glTetrisObj::glTet_create_background() {
 void glTetrisObj::glTet_create_block() {
 	block_val = queue.queue_pop();
 	glPushMatrix(); {
+		for (int i = 0; i < 4; i++) {
+			plane[i].glObj_setX(tetris_block[block_val][i][0] * 2);
+			plane[i].glObj_setY(0);
+			plane[i].glObj_setZ(tetris_block[block_val][i][1] * 2);
+			plane[i].glObj_set_texID(tex_id[6]);
+			plane[i].glObj_create_plane(block_size, GL_QUADS);
+		}
+		glTranslatef(0, 21, 0);
 		// BLOCK 하나(육면체 4개) 생성
 		for (int i = 0; i < 4; i++) {
 			block[i].glObj_setX(tetris_block[block_val][i][0] * 2);
@@ -84,12 +92,17 @@ void glTetrisObj::glTet_create_block() {
 
 void glTetrisObj::glTet_move_block() {
 	glPushMatrix(); {
-		// BLOCK 하나에 대한 이동과 회전
-		glTranslatef(pre_pos[0], pre_pos[1], pre_pos[2]);
-		// BLOCK 하나(육면체 4개) 생성
+		glTranslatef(pre_pos[0],0,pre_pos[2]);
 		for (int i = 0; i < 4; i++) {
-			block[i].glObj_create_cube(block_size);
+			plane[i].glObj_setY(collider.glColli_mark_block_floor(
+			pre_pos[0]+plane[i].glObj_getX(), pre_pos[2]+plane[i].glObj_getZ())*2);
+			plane[i].glObj_create_plane(block_size, GL_QUADS);
 		}
+		// BLOCK 하나에 대한 이동과 회전
+		glTranslatef(0, pre_pos[1], 0);
+		// BLOCK 하나(육면체 4개) 생성
+		for (int i = 0; i < 4; i++)
+			block[i].glObj_create_cube(block_size);
 	}
 	glPopMatrix();
 }
@@ -194,6 +207,8 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				z = block[i].glObj_getZ();
 				block[i].glObj_setX(-z);
 				block[i].glObj_setZ(x);
+				plane[i].glObj_setX(-z);
+				plane[i].glObj_setZ(x);
 			}
 			tmp = pre_pos[0];
 			pre_pos[0] = -pre_pos[2];
@@ -218,6 +233,8 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				z = block[i].glObj_getZ();
 				block[i].glObj_setX(-z);
 				block[i].glObj_setZ(x);
+				plane[i].glObj_setX(-z);
+				plane[i].glObj_setZ(x);
 			}
 			break;
 		case 'x': /* z 축 기준 회전 */
@@ -239,6 +256,8 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				y = block[i].glObj_getY();
 				block[i].glObj_setX(-y);
 				block[i].glObj_setY(x);
+				plane[i].glObj_setX(-y);
+				plane[i].glObj_setY(x);
 			}
 			break;
 		case 'c':
@@ -260,6 +279,8 @@ void glTetrisObj::glTet_block_norKey(unsigned char key) {
 				z = block[i].glObj_getZ();
 				block[i].glObj_setY(-z);
 				block[i].glObj_setZ(y);
+				plane[i].glObj_setY(-z);
+				plane[i].glObj_setZ(y);
 			}
 			break;
 	}

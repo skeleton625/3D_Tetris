@@ -35,7 +35,7 @@ private:
 	bool is_end = false;
 	float block_size[3] = { 1, 1, 1 }; /* Object 크기 */
 	float plane_ambi[4] = { 1.0, 1.0, 1.0, 1.0 }; /* 물체 주변광 */
-	float plane_diff[4] = { 0.9, 0.9, 0.9, 1.0 }; /* 물체 깊이광 */
+	float plane_diff[4] = { 0.8, 0.8, 0.8, 1.0 }; /* 물체 깊이광 */
 	float plane_spec[4] = { 0.7, 0.7, 0.7, 1.0 }; /* 물체 반사광 */
 	unsigned int tex_id[10];
 	int tetris_score;
@@ -55,6 +55,7 @@ private:
 	glLight obj_light; /* Tetris 기본 Object들의 빛 처리 객체 */
 	glCollider collider; /* BLOCK 충돌 처리 객체 */
 	glObject block[4];	/* BLOCK을 이루는 육면체 4개 */
+	glObject plane[4]; /* BLOCK이 놓이게 될 바닥면 표시 */
 	Tetris_queue queue;
 public:
 	void glTetris_init(unsigned int* tex_id);

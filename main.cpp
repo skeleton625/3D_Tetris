@@ -54,6 +54,7 @@ void main(int argc, char **argv) {
 	glTex.glTex_create_texture("brown.bmp", 4);
 	glTex.glTex_create_texture("orange.bmp", 5);
 	glTex.glTex_create_texture("gray.bmp", 6);
+	glTex.glTex_create_texture("floor.bmp", 7);
 
 	glDis.glDis_init(glTex.glTex_get_texID());
 	thread block_down{&glDisplay::glDis_block_cycle, &glDis};
